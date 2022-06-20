@@ -1,7 +1,7 @@
 Original App Design Project - README Template
 ===
 
-# CollegeClu
+# LetsFun
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -11,15 +11,15 @@ Original App Design Project - README Template
 
 ## Overview
 ### Description
-Helps you finding a good school by giving you enough details and also helps connecting with some alumnis or students going to the same school through LinkedIn. Could be used when you are planning to study at some completely different place.
+Helps you with finding Events happening in your selected city, with buying tickets, lets you post it like instagram to see who else's coming and helps you with finding the easiest way to reach there using maps.
 
 ### App Evaluation
-- **Category**: Education/Social Networking
-- **Mobile:** Mobile version will have more features like using camera to put your proifle pic, also maybe call someone from getting their number.
-- **Story:** Students now a days struggle with selecting a perfect school for their further studies especially if it's in a different country so this app helps them to make it easier for them to decide.
-- **Market:** Any person willing to study would be able to use it. 
+- **Category**: Entertainment/Social Networking
+- **Mobile:** Mobile version will have more features like using camera to put your profile pic, post it, use of maps and also maybe call someone from getting their number.
+- **Story:** People basically finds it difficult to look for any game/event to plan their weekend at the very last point with planning of how to go/reach there so this app is basically all in one which even helps you to find someone that can join you. 
+- **Market:** Anyone can use it. 
 - **Habit:** This app could be used as often or unoften depending on the user.
-- **Scope:** This can perhaps evolve into one-in-all app where you can find school details and chat(/call) with some experienced people.
+- **Scope:** This can perhaps evolve into one-in-all app where you can even plan events with unknowns and basically meet new people and hang out with them.
 
 ## Product Spec
 
@@ -27,64 +27,64 @@ Helps you finding a good school by giving you enough details and also helps conn
 
 **Required Must-have Stories**
 
-* [ ] User can register or login for linkedin.
-* [ ] User can find schools based on the interests.
-* [ ] User can use map to find location of that school
-* [ ] User can find rating of the school.
-* [ ] User can find total number of students going to the school.
-* [ ] User can search for students/alumnis going to that school.
-* [ ] User can connect with others using their usernames through chats.
-* [ ] User can use camera to click a photo to keep profile image.
+* [ ] User can register or login.
+* [ ] User can find events based on their interests of date and city.
+* [ ] User can use map to find location of that event.
+* [ ] User can see the easiest way to go/reach at that location.
+* [ ] User can use camera to click a photo to keep profile image or to post.
+* [ ] User can post their event details and may be can find someone to join.
+* [ ] User can add events to wishlist.
+* [ ] User can log-out.
 
 **Optional Nice-to-have Stories**
 
-* [ ] User can add the schools they like the most to the wishlist.
-* [ ] Users can see a small video(trailer or small preview) of that school/campus.
+* [ ] Users can buy a ticket for the event.
 * [ ] User can change the theme of the app.
+* [ ] User can like or comment on other's posts.
+* [ ] User can post something or keep profile pic from the gallery.
 * [ ] User can call someone with their number.
-* [ ] Instead of typing, user can speak their name (audio)!!??
-* [ ] User can play game with that student.
+* [ ] Instead of typing, user can speak their city (audio)!!??
 
 ### 2. Screen Archetypes
 
 * Splash Screen
 * Login/Sign-up screen
-   * User can register or login for linkedin.
-* List-schools screen
-    * User can find schools.
-    * User can use map to find location of that school
-    * User can find rating of the school.
-    * User can find total number of students going to the school.
- * Search screen
-   * User can search for students/alumnis going to that school.
-   * User can connect with them using their usernames through chats. 
+   * User can register or login.
+* List-events screen
+    * User can find events based on the city.
+    * User can use map to find location of that event.
+    * User can see price of the ticket to that event.
+ * Post screen
+   * User can post their event details or anything to get in touch with others and see who else's coming.
+   * User can like or comment on other's posts. 
  * Settings screen
    * User can use camera to click a photo to keep profile image.
    * User can change the theme.
    * User can see their wishlist.
+   * User can log-out.
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
 * List
-* Search
-* Profile
+* Post
+* Settings
 
 **Flow Navigation** (Screen to Screen)
 
 * Splash screen
-* Login/Sign-up for LinkedIn
+* Login/Sign-up
    * Login
    * Sign-up
-*  list-schools
+*  list-events
      * map
-     * ratings
-     * Total students
+     * price
      * like button
-* Search
-   * students/alumnis
-   * Msg
+* Post
+   * feed
+   * compose
+   * like/comment
  * Settings
    * Profile pic
    * theme
@@ -92,17 +92,13 @@ Helps you finding a good school by giving you enough details and also helps conn
    * Log out
 
 ## Wireframes
-<img src="https://imgur.com/trtY9cM.jpg" width=600>
+<img src="" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
+### Digital Wireframes & Mockups
 
-### [BONUS] Interactive Prototype
+### Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
