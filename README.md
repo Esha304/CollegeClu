@@ -92,7 +92,7 @@ Helps you with finding Events happening in your selected city, with buying ticke
    * Log out
 
 ## Wireframes
-<img src="" width=600>
+<img src="https://imgur.com/UxTeLAz" width=600>
 
 ### Digital Wireframes & Mockups
 
