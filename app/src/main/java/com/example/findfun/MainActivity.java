@@ -1,6 +1,8 @@
 package com.example.findfun;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.usage.UsageEvents;
 import android.content.Intent;
@@ -24,17 +26,26 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String NOW_PLAYING_URL = "https://www.eventbriteapi.com/v3/categories/?token=";
+    public static final String NOW_PLAYING_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=";
 
     public static final String TAG = "MainActivity";
-    //List<Event> events;
+    List<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RecyclerView rvEvents = findViewById(R.id.rvEvents);
+        events = new ArrayList<>();
 
-        //events = new ArrayList<>();
+        // create
+        EventAdapter eventAdapter = new EventAdapter(this, events);
+
+        // set adaptor
+        rvEvents.setAdapter(eventAdapter);
+
+        // set layout
+        rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(NOW_PLAYING_URL + getString(R.string.event_token), new JsonHttpResponseHandler() {
@@ -43,14 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
-                    JSONArray categories = jsonObject.getJSONArray("categories");
-                    Log.i(TAG, "Results: " + categories.toString());
-//                    events.addAll(Event.fromJsonArray(results));
-//                    movieAdapter.notifyDataSetChanged();
-//                    Log.i(TAG, "Movies: " + events.size());
+                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
+                    JSONArray results = embedded.getJSONArray("events");
+                    Log.i(TAG, "Results: " + results.toString());
+                    events.addAll(Event.fromJsonArray(results));
+                    eventAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
-                    Log.e(TAG,"Hit json exception", e);
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
             @Override
