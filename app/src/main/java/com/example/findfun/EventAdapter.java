@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
         TextView tvTitle;
         TextView tvDate;
         ImageView ivPoster;
+        TextView tvLocation;
+        TextView tvCity;
+        TextView tvState;
+
 //        int radius = 30;
 
         public ViewHolder(@NonNull View itemView) {
@@ -63,23 +68,29 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDate = itemView.findViewById(R.id.tvDate);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            tvLocation = itemView.findViewById(R.id.tvLocation);
+            tvState = itemView.findViewById(R.id.tvState);
+            tvCity = itemView.findViewById(R.id.tvCity);
             //itemView.setOnClickListener(this);
         }
 
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Event event = events.get(position);
-                Intent intent = new Intent(context, EventDetailsActivity.class);
-                intent.putExtra(Event.class.getSimpleName(), Parcels.wrap(event));
-                context.startActivity(intent);
-            }
-        }
+//        public void onClick(View v) {
+//            int position = getAdapterPosition();
+//            if (position != RecyclerView.NO_POSITION) {
+//                Event event = events.get(position);
+//                Intent intent = new Intent(context, EventDetailsActivity.class);
+//                intent.putExtra(Event.class.getSimpleName(), Parcels.wrap(event));
+//                context.startActivity(intent);
+//            }
+//        }
 
         public void bind(Event event) {
             tvTitle.setText(event.getEventName());
             Glide.with(context).load(event.posterURL).into(ivPoster);
             tvDate.setText(event.getDate());
+            tvLocation.setText(event.getLocation());
+            tvState.setText(event.getState());
+            tvCity.setText(event.getCity());
 //            tvOverview.setText(movie.getOverview());
 //            if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
 //                imageUrl = movie.getBackDropPath();

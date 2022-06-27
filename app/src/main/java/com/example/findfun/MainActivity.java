@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.ParseUser;
 
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(NOW_PLAYING_URL + getString(R.string.event_token), new JsonHttpResponseHandler() {
+        RequestParams params = new RequestParams();
+        params.put("size", 100);
+        //params.put("since_id", 1);
+        client.get(NOW_PLAYING_URL + getString(R.string.event_token),params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -76,12 +80,27 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+//        public void onClick(View v) {
+//            int position = getAdapterPosition();
+//            if (position != RecyclerView.NO_POSITION) {
+//                Event event = events.get(position);
+//                Intent intent = new Intent(context, EventDetailsActivity.class);
+//                intent.putExtra(Event.class.getSimpleName(), Parcels.wrap(event));
+//                context.startActivity(intent);
+//            }
+//        }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menulogoutbtn) {
             ParseUser.logOut();
             ParseUser currentUser = ParseUser.getCurrentUser();
             Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            return true;
+        }
+        if (item.getItemId() == R.id.rvEvents) {
+            Intent i = new Intent(this, EventListActivity.class);
             startActivity(i);
             return true;
         }

@@ -18,7 +18,7 @@
         android:theme="@style/Theme.FindFun"
         tools:targetApi="31" >
         <activity
-            android:name=".EventDetailsActivity"
+            android:name=".EventListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
