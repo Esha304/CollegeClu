@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
@@ -27,26 +30,48 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?city=";
-    //private static final String API_LAST_URL = "&apikey=uG8OMmifp1HVa3Joyhm1EEhFmK6dyNwc";
-
     public static final String TAG = "MainActivity";
     List<Event> events;
     EventAdapter eventAdapter;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        editText = findViewById(R.id.edittext);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
         RecyclerView rvEvents = findViewById(R.id.rvEvents);
         events = new ArrayList<>();
-        // create
         eventAdapter = new EventAdapter(this, events);
-        // set adaptor
         rvEvents.setAdapter(eventAdapter);
-        // set layout
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         populateHomeTimeLine();
+    }
+
+    private void filter(String text) {
+        ArrayList<Event> filteredList = new ArrayList<>();
+        for (Event item : events) {
+            if (item.getCity().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        eventAdapter.filterList(filteredList);
     }
 
     @Override
