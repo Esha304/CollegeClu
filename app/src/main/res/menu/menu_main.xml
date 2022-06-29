@@ -3,7 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menulogoutbtn"
         android:title="Logout"
         app:showAsAction="always" />
+
 </menu>
