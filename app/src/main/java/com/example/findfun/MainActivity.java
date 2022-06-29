@@ -27,10 +27,12 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String NOW_PLAYING_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=";
+    //private static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?city=";
+    //private static final String API_LAST_URL = "&apikey=uG8OMmifp1HVa3Joyhm1EEhFmK6dyNwc";
 
     public static final String TAG = "MainActivity";
     List<Event> events;
+    EventAdapter eventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,40 +40,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView rvEvents = findViewById(R.id.rvEvents);
         events = new ArrayList<>();
-
         // create
-        EventAdapter eventAdapter = new EventAdapter(this, events);
-
+        eventAdapter = new EventAdapter(this, events);
         // set adaptor
         rvEvents.setAdapter(eventAdapter);
-
         // set layout
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
-        params.put("size", 100);
-        //params.put("since_id", 1);
-        client.get(NOW_PLAYING_URL + getString(R.string.event_token),params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
-                    JSONArray results = embedded.getJSONArray("events");
-                    Log.i(TAG, "Results: " + results.toString());
-                    events.addAll(Event.fromJsonArray(results));
-                    eventAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure" + response);
-            }
-        });
+        populateHomeTimeLine();
     }
 
     @Override
@@ -99,11 +74,63 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         }
-        if (item.getItemId() == R.id.rvEvents) {
-            Intent i = new Intent(this, EventListActivity.class);
-            startActivity(i);
+        if (item.getItemId() == R.id.action_search) {
+            populateSearchEvents("chicago");
             return true;
         }
+//        if (item.getItemId() == R.id.rvEvents) {
+//            //Intent i = new Intent(this, EventListActivity.class);
+//            //startActivity(i);
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void populateHomeTimeLine() {
+        EventClient client = new EventClient();
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
+                    JSONArray results = embedded.getJSONArray("events");
+                    Log.i(TAG, "Results: " + results.toString());
+                    events.addAll(Event.fromJsonArray(results));
+                    eventAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure" + response);
+            }
+        });
+    }
+
+    private void populateSearchEvents(String location) {
+        EventClient client = new EventClient();
+        client.getEventsOnCity(location, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
+                    JSONArray results = embedded.getJSONArray("events");
+                    Log.i(TAG, "Results: " + results.toString());
+                    events.addAll(Event.fromJsonArray(results));
+                    eventAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure" + response);
+            }
+        });
     }
 }

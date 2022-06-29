@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="7dp">
+    android:layout_marginTop="5dp">
 
     <ImageView
         android:id="@+id/ivPoster"
@@ -132,4 +132,11 @@
         android:text="state"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvState"
+        android:background="@drawable/background_border"/>
 </RelativeLayout>
