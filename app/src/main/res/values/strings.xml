@@ -1,3 +1,62 @@
 <resources>
     <string name="app_name">FindFun</string>
+    <!--    <string name="google_maps_api_key">AIzaSyCvP4gF0UAUBctmiQXNrJUmRTy_y0L0D98</string>-->
+    <string name="title_activity_show_map">ShowMapActivity</string>
+<!--    <string name="back4app_server_url">https://parseapi.back4app.com/</string>-->
+<!--    <string name="back4app_app_id">AtT1Ph84598MJ9HPORB40Tsjj0Rg3axDEtSAnE5F</string>-->
+<!--    <string name="back4app_client_key">Io45GM5Hm1pDUeQ2Tfmnxyl0tV1q0ulLskUZSXIt</string>-->
+
+    <string-array name="names">
+        <item>Please select a city</item>
+        <item>Albuquerque</item>
+        <item>Anaheim</item>
+        <item>Arlington</item>
+        <item>Atlanta</item>
+        <item>Austin</item>
+        <item>Baltimore</item>
+        <item>Boston</item>
+        <item>Bristow</item>
+        <item>Bronx</item>
+        <item>Charlotte</item>
+        <item>Chicago</item>
+        <item>Chula Vista</item>
+        <item>Cincinnati</item>
+        <item>Clarkston</item>
+        <item>Cleveland</item>
+        <item>Commerce City</item>
+        <item>Dallas</item>
+        <item>Denver</item>
+        <item>East Rutherford</item>
+        <item>Flushing</item>
+        <item>Glendale</item>
+        <item>Hershey</item>
+        <item>Holmdel</item>
+        <item>Houston</item>
+        <item>Indianapolis</item>
+        <item>Inglewood</item>
+        <item>Jacksonville</item>
+        <item>Kansas City</item>
+        <item>Las Vegas</item>
+        <item>Latrobe</item>
+        <item>Los Angeles</item>
+        <item>Miami</item>
+        <item>Minneapolis</item>
+        <item>Mountain View</item>
+        <item>Nashville</item>
+        <item>New Orleans</item>
+        <item>Orchard Park</item>
+        <item>Philadelphia</item>
+        <item>Pittsburgh</item>
+        <item>Saint Louis</item>
+        <item>Salt Lake City</item>
+        <item>Saint Petersburg</item>
+        <item>San Diego</item>
+        <item>San Francisco</item>
+        <item>Santa Clara</item>
+        <item>Seattle</item>
+
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

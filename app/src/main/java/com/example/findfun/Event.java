@@ -1,5 +1,9 @@
 package com.example.findfun;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +18,7 @@ public class Event {
     String location;
     String city;
     String state;
+    //Button locationgo;
 
     //    String overview;
 //    Double voteAverage;
@@ -25,6 +30,14 @@ public class Event {
 //    }
 //
     public Event(JSONObject jsonObject) throws JSONException {
+//        locationgo = (Button) locationgo.findViewById(R.id.goToLocation);
+//        locationgo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(MainActivity.this, SeeLocationActivity.class);
+//                startActivity(i);
+//            }
+//        });
         eventName = jsonObject.getString("name");
 
         JSONArray jArrayimages = jsonObject.getJSONArray("images");
