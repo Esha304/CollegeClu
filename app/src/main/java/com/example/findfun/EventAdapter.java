@@ -3,6 +3,7 @@ package com.example.findfun;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
         TextView tvLocation;
         TextView tvCity;
         TextView tvState;
-
 //        int radius = 30;
 
         public ViewHolder(@NonNull View itemView) {
@@ -78,6 +78,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
             tvState = itemView.findViewById(R.id.tvState);
             tvCity = itemView.findViewById(R.id.tvCity);
             //itemView.setOnClickListener(this);
+
+            tvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Location", tvLocation.toString().trim());
+                    bundle.putString("City", tvCity.toString().trim());
+                    Intent intent = new Intent(context, SeeLocationActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
         }
 
 //        public void onClick(View v) {

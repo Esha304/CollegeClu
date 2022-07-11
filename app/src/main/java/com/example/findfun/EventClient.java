@@ -22,7 +22,7 @@ public class EventClient {
     public void getHomeTimeline(JsonHttpResponseHandler handler) {
         // Can specify query string params directly or through RequestParams.
         RequestParams params = new RequestParams();
-        params.put("size", 100);
+        params.put("size", 200);
         client.get(NOW_PLAYING_URL, params, handler);
     }
 

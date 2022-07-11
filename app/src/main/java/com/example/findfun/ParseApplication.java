@@ -1,25 +1,40 @@
 package com.example.findfun;
 
 import android.app.Application;
-
 import com.parse.Parse;
 import com.parse.ParseObject;
 
+//public class ParseApplication extends Application {
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        ParseObject.registerSubclass(Post.class);
+////        ParseObject.registerSubclass(User.class);
+////        ParseObject.registerSubclass(Comment.class);
+//
+//        Parse.initialize(new Parse.Configuration.Builder(this)
+//                .applicationId(getString(R.string.back4app_app_id))
+//                .clientKey(getString(R.string.back4app_client_key))
+//                .server(getString(R.string.back4app_server_url))
+//                .build());
+//    }
+//}
+
 public class ParseApplication extends Application {
+
+    // Initializes Parse SDK as soon as the application is created
     @Override
     public void onCreate() {
         super.onCreate();
-//        ParseObject.registerSubclass(Post.class);
-//        ParseObject.registerSubclass(User.class);
-//        ParseObject.registerSubclass(Comment.class);
+
+        ParseObject.registerSubclass(Post.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("AtT1Ph84598MJ9HPORB40Tsjj0Rg3axDEtSAnE5F")
-                .clientKey("Io45GM5Hm1pDUeQ2Tfmnxyl0tV1q0ulLskUZSXIt")
+                .applicationId("18veulvx2e4ryO5NpNhODz3MnEZufbesuhhQnIK4")
+                .clientKey("4S4nZzh6SIrb1F0OlcIEt5jow3N0LHuVw9Igw7CD")
                 .server("https://parseapi.back4app.com")
                 .build()
         );
-
     }
 }
 
