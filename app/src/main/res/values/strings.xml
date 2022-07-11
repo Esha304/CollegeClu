@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">FindFun</string>
-    <!--    <string name="google_maps_api_key">AIzaSyCvP4gF0UAUBctmiQXNrJUmRTy_y0L0D98</string>-->
     <string name="title_activity_show_map">ShowMapActivity</string>
 <!--    <string name="back4app_server_url">https://parseapi.back4app.com/</string>-->
 <!--    <string name="back4app_app_id">AtT1Ph84598MJ9HPORB40Tsjj0Rg3axDEtSAnE5F</string>-->
