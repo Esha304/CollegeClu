@@ -26,11 +26,10 @@ import java.util.List;
 public class FeedFragment extends Fragment {
 
     public static final String TAG = "FeedFragment";
-    TextView textView2;
-    private RecyclerView rvPosts;
-    private PostsAdapter adapter;
-    private List<Post> allPosts;
-//    SwipeRefreshLayout swipeContainer;
+    protected RecyclerView rvPosts;
+    protected PostsAdapter adapter;
+    protected List<Post> allPosts;
+    SwipeRefreshLayout swipeContainer;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -55,21 +54,22 @@ public class FeedFragment extends Fragment {
 
         queryPosts();
 
-//        //SwipeRefresh
-//        swipeContainer = view.findViewById(R.id.swipeContainer);
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                Log.i(TAG,"fetching new data");
-//                adapter.clear();
-//                allPosts.clear();
-//                queryPosts();
-//            }
-//        });
+        //SwipeRefresh
+        swipeContainer = view.findViewById(R.id.swipeContainer2);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG,"fetching new data");
+                adapter.clear();
+                allPosts.clear();
+                queryPosts();
+                swipeContainer.setRefreshing(false);
+            }
+        });
     }
 
     protected void queryPosts () {

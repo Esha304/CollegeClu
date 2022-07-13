@@ -29,9 +29,10 @@ import okhttp3.Headers;
 public class EventListFragment extends Fragment {
 
     public static final String TAG = "MainActivity";
-    RecyclerView rvEvents;
-    List<Event> events;
-    EventAdapter eventAdapter;
+    protected RecyclerView rvEvents;
+    protected List<Event> events;
+    protected EventAdapter eventAdapter;
+    SwipeRefreshLayout swipeContainer;
     //protected String cityName;
 
     public EventListFragment() {
@@ -70,6 +71,23 @@ public class EventListFragment extends Fragment {
 //        Intent intent = getIntent();
 //        String str = intent.getStringExtra("City");
         populateSearchEvents("Chicago");
+
+        //SwipeRefresh
+        swipeContainer = view.findViewById(R.id.swipeContainer1);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG,"fetching new data");
+                eventAdapter.clear();
+                events.clear();
+                populateSearchEvents("Chicago");
+                swipeContainer.setRefreshing(false);
+            }
+        });
 
     }
 

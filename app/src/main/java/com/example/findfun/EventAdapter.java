@@ -1,8 +1,11 @@
 package com.example.findfun;
 
+import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +57,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
         return events.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void clear() {
+        events.clear();
+        notifyDataSetChanged();
+    }
+
     public void filterList(ArrayList<Event> filteredList) {
         events = filteredList;
         notifyDataSetChanged();
@@ -67,7 +76,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
         TextView tvLocation;
         TextView tvCity;
         TextView tvState;
-//        int radius = 30;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,30 +85,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvState = itemView.findViewById(R.id.tvState);
             tvCity = itemView.findViewById(R.id.tvCity);
-            //itemView.setOnClickListener(this);
-
-            tvLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Location", tvLocation.toString().trim());
-                    bundle.putString("City", tvCity.toString().trim());
-                    Intent intent = new Intent(context, SeeLocationActivity.class);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
-            });
         }
-
-//        public void onClick(View v) {
-//            int position = getAdapterPosition();
-//            if (position != RecyclerView.NO_POSITION) {
-//                Event event = events.get(position);
-//                Intent intent = new Intent(context, EventDetailsActivity.class);
-//                intent.putExtra(Event.class.getSimpleName(), Parcels.wrap(event));
-//                context.startActivity(intent);
-//            }
-//        }
 
         public void bind(Event event) {
             tvTitle.setText(event.getEventName());
@@ -109,15 +94,28 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
             tvLocation.setText(event.getLocation());
             tvState.setText(event.getState());
             tvCity.setText(event.getCity());
-//            tvOverview.setText(movie.getOverview());
-//            if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-//                imageUrl = movie.getBackDropPath();
-//                Glide.with(context).load(imageUrl).placeholder(R.drawable.flicks_backdrop_placeholder).centerCrop().transform(new RoundedCorners(radius)).transform(new CircleCrop()).into(ivPoster);
-//            }
-//            else{
-//                imageUrl = movie.getPosterPath();
-//                Glide.with(context).load(imageUrl).placeholder(R.drawable.flicks_movie_placeholder).centerCrop().transform(new RoundedCorners(radius)).transform(new CircleCrop()).into(ivPoster);
-//            }
+            tvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String location = event.getLocation().toString();
+                    String city = event.getCity().toString();
+                    DisplayTrack(location, city);
+                }
+            });
+        }
+        private void DisplayTrack(String location, String city) {
+            try {
+                Uri uri = Uri.parse("https://www.google.co.in/maps/dir//"+ location + "," + city);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.google.android.apps.maps");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
         }
     }
 }
