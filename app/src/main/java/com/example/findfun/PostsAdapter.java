@@ -53,20 +53,25 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         return posts.size();
     }
 
-//    public void clear() {
-//        posts.clear();
-//        notifyDataSetChanged();
-//    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvUsername;
         private ImageView tvImage;
+        private ImageButton ibLikes;
+        private TextView tvLikes;
         private TextView tvDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvImage = itemView.findViewById(R.id.tvImage);
+            ibLikes = itemView.findViewById(R.id.ibPostLikes);
+            tvLikes = itemView.findViewById(R.id.tvPostLikes);
             tvDescription = itemView.findViewById(R.id.tvDescription);
         }
 
@@ -77,6 +82,30 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(tvImage);
             }
+            tvLikes.setText(post.likeCountDisplayText());
+
+            if (post.getLikedBy().contains(ParseUser.getCurrentUser().getObjectId())) {
+                ibLikes.setColorFilter(Color.RED);
+            } else { ibLikes.setColorFilter(Color.DKGRAY); }
+
+            ibLikes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    List<String> likedBy = post.getLikedBy();
+                    if (!likedBy.contains(ParseUser.getCurrentUser().getObjectId())) {
+                        likedBy.add(ParseUser.getCurrentUser().getObjectId());
+                        post.setLikedBy(likedBy);
+                        ibLikes.setColorFilter(Color.RED);
+                    }
+                    else {
+                        likedBy.remove(ParseUser.getCurrentUser().getObjectId());
+                        post.setLikedBy(likedBy);
+                        ibLikes.setColorFilter(Color.DKGRAY);
+                    }
+                    post.saveInBackground();
+                    tvLikes.setText(post.likeCountDisplayText());
+                }
+            });
         }
     }
 }
