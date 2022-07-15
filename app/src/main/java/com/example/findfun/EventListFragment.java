@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.findfun.Event;
+import com.example.findfun.EventAdapter;
+import com.example.findfun.EventClient;
+import com.example.findfun.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +37,9 @@ public class EventListFragment extends Fragment {
     protected List<Event> events;
     protected EventAdapter eventAdapter;
     SwipeRefreshLayout swipeContainer;
-    //protected String cityName;
+    String strEvent;
+    String strDate;
+    String strCity;
 
     public EventListFragment() {
         // Required empty public constructor
@@ -43,6 +49,15 @@ public class EventListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (getArguments() != null) {
+            strEvent = getArguments().getString("Event");
+            strDate = getArguments().getString("Date");
+            strCity = getArguments().getString("City");
+            System.out.println("Eventfrag "+ strCity+strEvent);
+            populateSearchEvents(strCity, strEvent);
+        }
+
         return inflater.inflate(R.layout.fragment_event_list, container, false);
     }
 
@@ -62,15 +77,7 @@ public class EventListFragment extends Fragment {
         rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 //        rvPosts.addOnScrollListener(scrollListener);
 
-        if (getArguments() != null){
-            String cityName = getArguments().getString("City");
-            populateSearchEvents(cityName);
-        }
-        //Bundle bundle = this.getArguments();
-        //String str = savedInstanceState.getString("City");
-//        Intent intent = getIntent();
-//        String str = intent.getStringExtra("City");
-        populateSearchEvents("Chicago");
+        //populateSearchEvents(strCity, strEvent);
 
         //SwipeRefresh
         swipeContainer = view.findViewById(R.id.swipeContainer1);
@@ -84,16 +91,16 @@ public class EventListFragment extends Fragment {
                 Log.i(TAG,"fetching new data");
                 eventAdapter.clear();
                 events.clear();
-                populateSearchEvents("Chicago");
+                populateSearchEvents(strCity, strEvent);
                 swipeContainer.setRefreshing(false);
             }
         });
 
     }
 
-    private void populateSearchEvents(String location) {
+    private void populateSearchEvents(String location, String type) {
         EventClient client = new EventClient();
-        client.getEventsOnCity(location, new JsonHttpResponseHandler() {
+        client.getEventsOnCity(location, type, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -103,6 +110,13 @@ public class EventListFragment extends Fragment {
                     JSONArray results = embedded.getJSONArray("events");
                     Log.i(TAG, "Results: " + results.toString());
                     events.addAll(Event.fromJsonArray(results));
+//                    ArrayList<Event> filteredList = new ArrayList<>();
+//                    for (Event item : events) {
+//                        if (item.getDate().contains(strDate)) {
+//                            filteredList.add(item);
+//                        }
+//                    }
+//                    eventAdapter.filterList(filteredList);
                     eventAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();

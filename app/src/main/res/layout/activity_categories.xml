@@ -33,12 +33,75 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerC"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="320dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="319dp"
+        android:layout_marginStart="10dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/City"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="28dp"
+        android:text="DATE:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/City" />
+
+    <Button
+        android:id="@+id/datePickerButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="  JAN 01 2020"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        style="?android:spinnerStyle"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/Date"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerC"
+        android:layout_marginTop="8dp"
+        android:onClick="openDatePicker"/>
+
+    <TextView
+        android:id="@+id/Event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="28dp"
+        android:text="Event:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Date" />
+
+    <Spinner
+        android:id="@+id/spinnerE"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/Event"
+        app:layout_constraintTop_toBottomOf="@+id/datePickerButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:text="LET'S GO 👉🏻"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/spinnerE"
+        app:layout_constraintTop_toBottomOf="@id/spinnerE"
+        app:layout_constraintVertical_bias="0.847" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
