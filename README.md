@@ -99,6 +99,6 @@ Helps you with finding Events happening in your selected city, with buying ticke
 ### Interactive Prototype
 
 ## Schema 
-### Models
+### 
 
 ### Networking

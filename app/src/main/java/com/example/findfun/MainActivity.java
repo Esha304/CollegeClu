@@ -4,42 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.RequestParams;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent incomingIntent = getIntent();
+        String eventType = incomingIntent.getStringExtra("Event");
+        String eventDate = incomingIntent.getStringExtra("Date");
+        String eventCity = incomingIntent.getStringExtra("City");
+        sendData(eventType, eventDate, eventCity);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment1).addToBackStack(null).commit();
@@ -79,23 +57,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-//        editText = findViewById(R.id.edittext);
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                filter(s.toString());
-//            }
-//        });
+    }
+
+    private void sendData(String eventType, String eventDate, String eventCity) {
+        Bundle bundle = new Bundle();
+        bundle.putString("Event",eventType);
+        bundle.putString("Date",eventDate);
+        bundle.putString("City",eventCity);
+        //Fragment fragobj = new EventListFragment();
+        fragment1.setArguments(bundle);
+        //fragmentManager.beginTransaction().replace(R.id.flContainer, fragobj).addToBackStack(null).commit();
     }
 
 //    private void filter(String text) {
@@ -114,15 +85,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-//        public void onClick(View v) {
-//            int position = getAdapterPosition();
-//            if (position != RecyclerView.NO_POSITION) {
-//                Event event = events.get(position);
-//                Intent intent = new Intent(context, EventDetailsActivity.class);
-//                intent.putExtra(Event.class.getSimpleName(), Parcels.wrap(event));
-//                context.startActivity(intent);
-//            }
-//        }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -133,39 +95,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         }
-//        if (item.getItemId() == R.id.action_search) {
-//            populateSearchEvents("chicago");
-//            return true;
-//        }
-//        if (item.getItemId() == R.id.rvEvents) {
-//            //Intent i = new Intent(this, EventListActivity.class);
-//            //startActivity(i);
-//            return true;
-//        }
+        if (item.getItemId() == R.id.menubackbtn) {
+            Intent i = new Intent(this, CategoriesActivity.class);
+            startActivity(i);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
-
-//    private void populateHomeTimeLine() {
-//        EventClient client = new EventClient();
-//        client.getHomeTimeline(new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Headers headers, JSON json) {
-//                Log.d(TAG, "onSuccess");
-//                JSONObject jsonObject = json.jsonObject;
-//                try {
-//                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
-//                    JSONArray results = embedded.getJSONArray("events");
-//                    Log.i(TAG, "Results: " + results.toString());
-//                    events.addAll(Event.fromJsonArray(results));
-//                    eventAdapter.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-//                Log.d(TAG, "onFailure" + response);
-//            }
-//        });
-//    }
 }
