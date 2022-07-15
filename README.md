@@ -27,23 +27,22 @@ Helps you with finding Events happening in your selected city, with buying ticke
 
 **Required Must-have Stories**
 
-* [ ] User can register or login.
-* [ ] User can find events based on their interests of date and city.
-* [ ] User can use map to find location of that event.
-* [ ] User can see the easiest way to go/reach at that location.
-* [ ] User can use camera to click a photo to keep profile image or to post.
-* [ ] User can post their event details and may be can find someone to join.
-* [ ] User can add events to wishlist.
-* [ ] User can log-out.
+* [X] User can register or login.
+* [X] User can find events based on their interests of type and city.
+* [X] User can use map to find location of that event.
+* [X] User can see the easiest way to go/reach at that location.
+* [X] User can use camera to click a photo to keep profile image or to post.
+* [X] User can post their event details.
+* [X] User can log-out.
 
 **Optional Nice-to-have Stories**
 
 * [ ] Users can buy a ticket for the event.
 * [ ] User can change the theme of the app.
-* [ ] User can like or comment on other's posts.
-* [ ] User can post something or keep profile pic from the gallery.
-* [ ] User can call someone with their number.
-* [ ] Instead of typing, user can speak their city (audio)!!??
+* [ ] User can add events to wishlist.
+* [X] User can like on other's posts.
+* [X] User can post something.
+* [ ] User can keep profile pic from the gallery
 
 ### 2. Screen Archetypes
 
