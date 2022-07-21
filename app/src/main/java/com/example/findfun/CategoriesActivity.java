@@ -19,8 +19,8 @@ import java.util.Calendar;
 
 public class CategoriesActivity extends AppCompatActivity {
 
-    private DatePickerDialog datePickerDialog;
-    private Button dateButton;
+//    private DatePickerDialog datePickerDialog;
+//    private Button dateButton;
     public String sendCity;
     public String sendEvent;
     public String sendDate;
@@ -33,17 +33,23 @@ public class CategoriesActivity extends AppCompatActivity {
 
         btnGo = findViewById(R.id.btnGo);
 
-        initDatePicker();
-        dateButton = findViewById(R.id.datePickerButton);
-        dateButton.setText(getTodaysDate());
+//        initDatePicker();
+//        dateButton = findViewById(R.id.datePickerButton);
+//        dateButton.setText(getTodaysDate());
 
         Spinner citySpinner = (Spinner) findViewById(R.id.spinnerC);
+        Spinner dateSpinner = (Spinner) findViewById(R.id.spinnerD);
         Spinner eventSpinner = (Spinner) findViewById(R.id.spinnerE);
 
         ArrayAdapter<String> myCAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.city));
         myCAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         citySpinner.setAdapter(myCAdapter);
+
+        ArrayAdapter<String> myDAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.month));
+        myDAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dateSpinner.setAdapter(myDAdapter);
 
         ArrayAdapter<String> myEAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.events));
@@ -278,10 +284,71 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
+        dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedMonth = adapterView.getItemAtPosition(i).toString();
+                switch (selectedMonth)
+                {
+                    case "January":
+                        sendDate = "01";
+                        break;
+
+                    case "February":
+                        sendDate = "02";
+                        break;
+
+                    case "March":
+                        sendDate = "03";
+                        break;
+
+                    case "April":
+                        sendDate = "04";
+                        break;
+
+                    case "May":
+                        sendDate = "05";
+                        break;
+
+                    case "June":
+                        sendDate = "06";
+                        break;
+
+                    case "July":
+                        sendDate = "07";
+                        break;
+
+                    case "August":
+                        sendDate = "08";
+                        break;
+
+                    case "September":
+                        sendDate = "09";
+                        break;
+
+                    case "October":
+                        sendDate = "10";
+                        break;
+
+                    case "November":
+                        sendDate = "11";
+                        break;
+
+                    case "December":
+                        sendDate = "12";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendDate = dateButton.getText().toString();
 //                Bundle bundle = new Bundle();
 //                bundle.putString("Event",sendEvent);
 //                bundle.putString("Date",sendDate);
@@ -298,77 +365,77 @@ public class CategoriesActivity extends AppCompatActivity {
         });
     }
 
-    private String getTodaysDate()
-    {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-    }
-
-    private void initDatePicker()
-    {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
-        {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day)
-            {
-                month = month + 1;
-                String date = makeDateString(day, month, year);
-                dateButton.setText(date);
-            }
-        };
-
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        int style = AlertDialog.THEME_HOLO_LIGHT;
-
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-    }
-
-    private String makeDateString(int day, int month, int year)
-    {
-        return year + "-" + getMonthFormat(month) + "-" + day;
-    }
-
-    private String getMonthFormat(int month)
-    {
-        if(month == 1)
-            return "01";
-        if(month == 2)
-            return "02";
-        if(month == 3)
-            return "03";
-        if(month == 4)
-            return "04";
-        if(month == 5)
-            return "05";
-        if(month == 6)
-            return "06";
-        if(month == 7)
-            return "07";
-        if(month == 8)
-            return "08";
-        if(month == 9)
-            return "09";
-        if(month == 10)
-            return "10";
-        if(month == 11)
-            return "11";
-        if(month == 12)
-            return "12";
-
-        //default should never happen
-        return "JAN";
-    }
-
-    public void openDatePicker(View view)
-    {
-        datePickerDialog.show();
-    }
+//    private String getTodaysDate()
+//    {
+//        Calendar cal = Calendar.getInstance();
+//        int year = cal.get(Calendar.YEAR);
+//        int month = cal.get(Calendar.MONTH);
+//        month = month + 1;
+//        int day = cal.get(Calendar.DAY_OF_MONTH);
+//        return makeDateString(day, month, year);
+//    }
+//
+//    private void initDatePicker()
+//    {
+//        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+//        {
+//            @Override
+//            public void onDateSet(DatePicker datePicker, int year, int month, int day)
+//            {
+//                month = month + 1;
+//                String date = makeDateString(day, month, year);
+//                dateButton.setText(date);
+//            }
+//        };
+//
+//        Calendar cal = Calendar.getInstance();
+//        int year = cal.get(Calendar.YEAR);
+//        int month = cal.get(Calendar.MONTH);
+//        int day = cal.get(Calendar.DAY_OF_MONTH);
+//
+//        int style = AlertDialog.THEME_HOLO_LIGHT;
+//
+//        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+//    }
+//
+//    private String makeDateString(int day, int month, int year)
+//    {
+//        return year + "-" + getMonthFormat(month) + "-" + day;
+//    }
+//
+//    private String getMonthFormat(int month)
+//    {
+//        if(month == 1)
+//            return "01";
+//        if(month == 2)
+//            return "02";
+//        if(month == 3)
+//            return "03";
+//        if(month == 4)
+//            return "04";
+//        if(month == 5)
+//            return "05";
+//        if(month == 6)
+//            return "06";
+//        if(month == 7)
+//            return "07";
+//        if(month == 8)
+//            return "08";
+//        if(month == 9)
+//            return "09";
+//        if(month == 10)
+//            return "10";
+//        if(month == 11)
+//            return "11";
+//        if(month == 12)
+//            return "12";
+//
+//        //default should never happen
+//        return "JAN";
+//    }
+//
+//    public void openDatePicker(View view)
+//    {
+//        datePickerDialog.show();
+//    }
 }

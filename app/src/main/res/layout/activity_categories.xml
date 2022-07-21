@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoriesActivity">
+    tools:context=".CategoriesActivity"
+    android:background="@color/yellow">
 
     <TextView
         android:id="@+id/tvCtg"
@@ -55,19 +56,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/City" />
 
-    <Button
-        android:id="@+id/datePickerButton"
+    <Spinner
+        android:id="@+id/spinnerD"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="  JAN 01 2020"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        style="?android:spinnerStyle"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="10dp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@id/Date"
         app:layout_constraintTop_toBottomOf="@+id/spinnerC"
-        android:layout_marginTop="8dp"
-        android:onClick="openDatePicker"/>
+        android:layout_centerHorizontal="true" />
+
+<!--    <Button-->
+<!--        android:id="@+id/datePickerButton"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="  JAN 01 2020"-->
+<!--        android:textSize="15sp"-->
+<!--        android:textColor="@color/black"-->
+<!--        style="?android:spinnerStyle"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/Date"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/spinnerC"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:onClick="openDatePicker"/>-->
 
     <TextView
         android:id="@+id/Event"
@@ -89,7 +101,7 @@
         android:layout_marginTop="8dp"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@id/Event"
-        app:layout_constraintTop_toBottomOf="@+id/datePickerButton"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerD"
         android:layout_centerHorizontal="true" />
 
     <Button
