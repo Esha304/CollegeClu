@@ -5,11 +5,13 @@
     <item
         android:id="@+id/menubackbtn"
         android:title="Back"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:itemTextColor="@color/black"/>
 
     <item
         android:id="@+id/menulogoutbtn"
         android:title="Logout"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:itemTextColor="@color/black"/>
 
 </menu>

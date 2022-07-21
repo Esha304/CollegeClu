@@ -1,6 +1,9 @@
 package com.example.findfun;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,18 +21,31 @@ public class Event {
     String location;
     String city;
     String state;
-    //Button locationgo;
 
-    //    String overview;
-//    Double voteAverage;
-//
-//    public Movie() {}
-//
-//    public Double getVoteAverage() {
-//        return voteAverage;
+//    public Event(String name, String image, String Date, String venue, String City, String State){
+//        this.eventName = name;
+//        this.posterURL = image;
+//        this.date = Date;
+//        this.location = venue;
+//        this.city = City;
+//        this.state = State;
 //    }
 //
+//    public Event(){
+//    }
+//    SQLiteDatabase db = this.getWritableDatabase();
+//    ContentValues contentValues = new ContentValues();
+//        contentValues.put(NAME_COL,event.getEventName());
+//        contentValues.put(IMAGE_COL,event.getPosterUrl());
+//        contentValues.put(DATE_COL, event.getDate());
+//        contentValues.put(VENUE_COL,event.getLocation());
+//        contentValues.put(CITY_COL,event.getCity());
+//        contentValues.put(STATE_COL, event.getState());
+//
+//    long result  = db.insert(TABLE_NAME, null, contentValues);
+
     public Event(JSONObject jsonObject) throws JSONException {
+
 //        locationgo = (Button) locationgo.findViewById(R.id.goToLocation);
 //        locationgo.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -65,7 +81,6 @@ public class Event {
         JSONObject json_data_state = json_data_first.getJSONObject("state");
         state = json_data_state.getString("stateCode");
 
-//        voteAverage = jsonObject.getDouble("vote_average");
     }
 
     public static List<Event> fromJsonArray(JSONArray eventJsonArray) throws JSONException {
@@ -75,14 +90,6 @@ public class Event {
         }
         return events;
     }
-
-//    public String getPosterPath() {
-//        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
-//    }
-//
-//    public String getBackDropPath() {
-//        return String.format("https://image.tmdb.org/t/p/w342/%s", backDropPath);
-//    }
 
     public String getEventName() {
         return eventName;

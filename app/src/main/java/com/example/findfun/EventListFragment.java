@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.findfun.Event;
@@ -40,6 +41,13 @@ public class EventListFragment extends Fragment {
     String strEvent;
     String strDate;
     String strCity;
+    MyDatabase eventDB;
+//    String name;
+//    String image;
+//    String date;
+//    String venue;
+//    String city;
+//    String state;
 
     public EventListFragment() {
         // Required empty public constructor
@@ -54,7 +62,6 @@ public class EventListFragment extends Fragment {
             strEvent = getArguments().getString("Event");
             strDate = getArguments().getString("Date");
             strCity = getArguments().getString("City");
-            System.out.println("Eventfrag "+ strCity+strEvent);
             populateSearchEvents(strCity, strEvent);
         }
 
@@ -64,6 +71,8 @@ public class EventListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+//        AddData();
 
         rvEvents = view.findViewById(R.id.rvEvents);
         events = new ArrayList<>();
@@ -98,6 +107,27 @@ public class EventListFragment extends Fragment {
 
     }
 
+//    private void AddData() {
+//        Event event;
+//        try {
+//            event = new Event(name, image, date, venue, city, state);
+//            Toast.makeText(getContext(), event.toString(), Toast.LENGTH_SHORT).show();
+//        }
+//        catch (Exception e){
+//            Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+//            event = new Event("not", "not found", "ef", "efd", "efded", "ef");
+//        }
+//        eventDB = new MyDatabase(getContext());
+//
+//        boolean insertData = eventDB.addData(event);
+//
+//        if (insertData == true) {
+//            Toast.makeText(getContext(), "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+//        } else {
+//            Toast.makeText(getContext(), "Something went wrong :(.", Toast.LENGTH_LONG).show();
+//        }
+//    }
+
     private void populateSearchEvents(String location, String type) {
         EventClient client = new EventClient();
         client.getEventsOnCity(location, type, new JsonHttpResponseHandler() {
@@ -109,14 +139,17 @@ public class EventListFragment extends Fragment {
                     JSONObject embedded = jsonObject.getJSONObject("_embedded");
                     JSONArray results = embedded.getJSONArray("events");
                     Log.i(TAG, "Results: " + results.toString());
+
+                    sendtoDb(results);
+
                     events.addAll(Event.fromJsonArray(results));
-//                    ArrayList<Event> filteredList = new ArrayList<>();
-//                    for (Event item : events) {
-//                        if (item.getDate().contains(strDate)) {
-//                            filteredList.add(item);
-//                        }
-//                    }
-//                    eventAdapter.filterList(filteredList);
+                    ArrayList<Event> filteredList = new ArrayList<>();
+                    for (Event item : events) {
+                        if (item.getDate().contains(strDate)) {
+                            filteredList.add(item);
+                        }
+                    }
+                    eventAdapter.filterList(filteredList);
                     eventAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,5 +160,10 @@ public class EventListFragment extends Fragment {
                 Log.d(TAG, "onFailure" + response);
             }
         });
+    }
+
+    private void sendtoDb(JSONArray results) {
+        eventDB = new MyDatabase(getContext());
+        eventDB.addData(results);
     }
 }

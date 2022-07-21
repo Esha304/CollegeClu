@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         String eventType = incomingIntent.getStringExtra("Event");
         String eventDate = incomingIntent.getStringExtra("Date");
         String eventCity = incomingIntent.getStringExtra("City");
-        sendData(eventType, eventDate, eventCity);
+        sendData(eventType, eventDate, eventCity, fragment1);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment1).addToBackStack(null).commit();
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem .getItemId()) {
                     case R.id.action_home:
                         fragment2 = new EventListFragment();
+                        sendData(eventType, eventDate, eventCity, fragment2);
                         break;
                     case R.id.action_Feed:
                         fragment2 = new FeedFragment();
@@ -59,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void sendData(String eventType, String eventDate, String eventCity) {
+    private void sendData(String eventType, String eventDate, String eventCity, Fragment fragmentsent) {
         Bundle bundle = new Bundle();
         bundle.putString("Event",eventType);
         bundle.putString("Date",eventDate);
         bundle.putString("City",eventCity);
         //Fragment fragobj = new EventListFragment();
-        fragment1.setArguments(bundle);
+        fragmentsent.setArguments(bundle);
         //fragmentManager.beginTransaction().replace(R.id.flContainer, fragobj).addToBackStack(null).commit();
     }
 

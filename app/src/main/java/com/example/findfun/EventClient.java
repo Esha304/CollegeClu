@@ -32,7 +32,7 @@ public class EventClient {
         String apiCUrl = getApiCityUrl(location, eventType);
         //client.get(getApiCityUrl(location), handler);
         RequestParams params = new RequestParams();
-        params.put("size", 20 );
+        params.put("size", 30 );
         client.get(apiCUrl, params, handler);
         return client;
     }
