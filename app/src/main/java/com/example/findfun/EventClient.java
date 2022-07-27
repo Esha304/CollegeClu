@@ -20,19 +20,19 @@ public class EventClient {
         return API_CITY_URL + choosenCity + API_TYPE_URL + choosenType + API_LAST_URL;
     }
 
-//    public void getHomeTimeline(JsonHttpResponseHandler handler) {
-//        // Can specify query string params directly or through RequestParams.
-//        RequestParams params = new RequestParams();
-//        params.put("size", 200);
-//        client.get(NOW_PLAYING_URL, params, handler);
-//    }
+    public void getHomeTimeline(JsonHttpResponseHandler handler) {
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("size", 200);
+        client.get(NOW_PLAYING_URL, params, handler);
+    }
 
     // Method for accessing the search API
     public AsyncHttpClient getEventsOnCity(String location, String eventType, JsonHttpResponseHandler handler) {
         String apiCUrl = getApiCityUrl(location, eventType);
         //client.get(getApiCityUrl(location), handler);
         RequestParams params = new RequestParams();
-        params.put("size", 30 );
+        params.put("size", 200 );
         client.get(apiCUrl, params, handler);
         return client;
     }

@@ -143,4 +143,12 @@
         android:layout_below="@+id/tvLocation"
         android:background="@drawable/background_border"/>
 
+<!--    <View-->
+<!--        android:id="@+id/divider"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="5dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_below="@id/tvState"-->
+<!--        android:background="?android:attr/listDivider" />-->
+
 </RelativeLayout>

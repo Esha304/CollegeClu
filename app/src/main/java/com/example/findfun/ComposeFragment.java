@@ -17,6 +17,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,6 +63,7 @@ public class ComposeFragment extends Fragment {
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         etCaption = view.findViewById(R.id.etCaption);
         btnCapture = view.findViewById(R.id.btnCapture);
@@ -175,5 +179,34 @@ public class ComposeFragment extends Fragment {
                 ivImage1.setImageResource(0);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_sort, menu);
+        menu.findItem(R.id.DateRO).setVisible(false);
+        menu.findItem(R.id.DateOR).setVisible(false);
+//        menu.findItem(R.id.Ascen).setVisible(false);
+//        menu.findItem(R.id.Descen).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menulogoutbtn) {
+            ParseUser.logOut();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            Intent i = new Intent(getContext(), LoginActivity.class);
+            startActivity(i);
+            return true;
+        }
+        if (item.getItemId() == R.id.menubackbtn) {
+            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

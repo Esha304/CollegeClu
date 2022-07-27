@@ -19,9 +19,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
     private EditText etUsername;
+    private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
     private Button signupBtn;
+    String username;
+    String email;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         etUsername = findViewById(R.id.etUsername);
+        etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         signupBtn = findViewById(R.id.signupBtn);
@@ -41,9 +46,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClicking login button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                loginUser(username, password);
+                username = etUsername.getText().toString();
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
+                loginUser(username, email, password);
             }
         });
 
@@ -51,15 +57,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick signin button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                signUpUser(username, password);
+                username = etUsername.getText().toString();
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
+                signUpUser(username, email, password);
             }
         });
     }
 
 
-    private void loginUser(String username, String password) {
+    private void loginUser(String username, String email, String password) {
         Log.i(TAG, "Attempting to login user" + username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
@@ -70,20 +77,21 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 // Navigate to the main activity if the user has signed in properly
-                goMainActivity();
+                goCTActivity(email);
+
                 Toast.makeText(LoginActivity.this, "Success Login in!", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-    private void signUpUser(String username, String password){
+    private void signUpUser(String username, String email, String password){
         // Create the ParseUser
         ParseUser user = new ParseUser();
         // Set core properties
         user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(password);
-        user.setEmail(username+"@example.com");
         // Set custom properties
         user.put("phone", "650-253-0000");
         // Invoke signUpInBackground
@@ -91,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Navigate user to main activity
-                    goMainActivity();
+                    goCTActivity(email);
                     // Show a toast to indicate user successfully signed up for an account
                     Toast.makeText(LoginActivity.this, "Success Signing in!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -104,8 +112,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void goCTActivity(String emailId) {
+        Intent i = new Intent(this, CityTypeActivity.class);
+        i.putExtra("Email",emailId);
+        Log.i("GOT FROM LOGIN ", "SUCCESSS " + emailId);
+        startActivity(i);
+        finish();
+    }
+
     private void goMainActivity() {
-        Intent i = new Intent(this, CategoriesActivity.class);
+        Intent i = new Intent(this, CityTypeActivity.class);
         startActivity(i);
         finish();
     }

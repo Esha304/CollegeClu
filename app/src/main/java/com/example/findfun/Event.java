@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Event {
@@ -22,14 +23,14 @@ public class Event {
     String city;
     String state;
 
-//    public Event(String name, String image, String Date, String venue, String City, String State){
-//        this.eventName = name;
-//        this.posterURL = image;
-//        this.date = Date;
-//        this.location = venue;
-//        this.city = City;
-//        this.state = State;
-//    }
+    public Event(String name, String image, String Date, String venue, String City, String State){
+        this.eventName = name;
+        this.posterURL = image;
+        this.date = Date;
+        this.location = venue;
+        this.city = City;
+        this.state = State;
+    }
 //
 //    public Event(){
 //    }
@@ -90,6 +91,34 @@ public class Event {
         }
         return events;
     }
+
+//    public static Comparator<Event> eventPriceHL = new Comparator<Event>() {
+//        @Override
+//        public int compare(Event e1, Event e2) {
+//            return e1.getDate() - e2.getDate();
+//        }
+//    };
+//
+//    public static Comparator<Event> eventPriceLH = new Comparator<Event>() {
+//        @Override
+//        public int compare(Event e1, Event e2) {
+//            return e1;
+//        }
+//    };
+
+    public static Comparator<Event> DateAscending = new Comparator<Event>() {
+        @Override
+        public int compare(Event e1, Event e2) {
+            return e1.getDate().compareTo(e2.getDate());
+        }
+    };
+
+    public static Comparator<Event> DateDescending = new Comparator<Event>() {
+        @Override
+        public int compare(Event e1, Event e2) {
+            return e2.getDate().compareTo(e1.getDate());
+        }
+    };
 
     public String getEventName() {
         return eventName;
