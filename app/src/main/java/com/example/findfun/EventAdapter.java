@@ -5,6 +5,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,12 +32,20 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
 
-    Context context;
-    List<Event> events;
+    //List<Event> events;
+    MyDatabase eventDB;
+    private Context context;
+    private ArrayList event_name, event_image, event_date, event_venue, event_city, event_state;
 
-    public EventAdapter(Context context, List<Event> movies) {
+    public EventAdapter(Context context, ArrayList event_name, ArrayList event_image, ArrayList event_date, ArrayList event_venue, ArrayList event_city, ArrayList event_state) {
         this.context = context;
-        this.events = movies;
+        this.event_name = event_name;
+        this.event_image = event_image;
+        this.event_date = event_date;
+        this.event_venue = event_venue;
+        this.event_city = event_city;
+        this.event_state = event_state;
+        //this.events = events;
     }
 
     @NonNull
@@ -47,26 +58,37 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("EventAdpapter", "OnBindViewHolder"+ position);
-        Event event = events.get(position);
-        holder.bind(event);
+
+        holder.tvTitle.setText(String.valueOf(event_name.get(position)));
+        Glide.with(context).load(event_image.get(position).toString()).into(holder.ivPoster);
+        holder.tvDate.setText(String.valueOf(event_date.get(position)));
+        holder.tvLocation.setText(String.valueOf(event_venue.get(position)));
+        holder.tvCity.setText(String.valueOf(event_city.get(position)));
+        holder.tvState.setText(String.valueOf(event_state.get(position)));
+        //Log.d("EventAdpapter", "OnBindViewHolder"+ position);
+        //Event event = events.get(position);
+        //holder.bind(event);
     }
+
+
+
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return event_name.size();
+        //return events.size();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void clear() {
-        events.clear();
-        notifyDataSetChanged();
-    }
-
-    public void filterList(ArrayList<Event> filteredList) {
-        events = filteredList;
-        notifyDataSetChanged();
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    public void clear() {
+//        events.clear();
+//        notifyDataSetChanged();
+//    }
+//
+//    public void filterList(ArrayList<Event> filteredList) {
+//        events = filteredList;
+//        notifyDataSetChanged();
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -79,6 +101,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            eventDB = new MyDatabase(context);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDate = itemView.findViewById(R.id.tvDate);
             ivPoster = itemView.findViewById(R.id.ivPoster);

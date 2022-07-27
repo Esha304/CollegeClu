@@ -1,5 +1,6 @@
 package com.example.findfun;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.findfun.Post;
 import com.example.findfun.PostsAdapter;
@@ -22,6 +27,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.Parse;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +53,7 @@ public class FeedFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPosts);
         allPosts = new ArrayList<>();
@@ -96,5 +103,34 @@ public class FeedFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_sort, menu);
+        menu.findItem(R.id.DateRO).setVisible(false);
+        menu.findItem(R.id.DateOR).setVisible(false);
+//        menu.findItem(R.id.Ascen).setVisible(false);
+//        menu.findItem(R.id.Descen).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menulogoutbtn) {
+            ParseUser.logOut();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            Intent i = new Intent(getContext(), LoginActivity.class);
+            startActivity(i);
+            return true;
+        }
+        if (item.getItemId() == R.id.menubackbtn) {
+            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

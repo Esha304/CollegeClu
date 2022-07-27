@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
+
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent incomingIntent = getIntent();
+        String useremail = ParseUser.getCurrentUser().getEmail();
         String eventType = incomingIntent.getStringExtra("Event");
         String eventDate = incomingIntent.getStringExtra("Date");
         String eventCity = incomingIntent.getStringExtra("City");
-        sendData(eventType, eventDate, eventCity, fragment1);
+        sendData(useremail, eventType, eventDate, eventCity, fragment1);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment1).addToBackStack(null).commit();
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem .getItemId()) {
                     case R.id.action_home:
                         fragment2 = new EventListFragment();
-                        sendData(eventType, eventDate, eventCity, fragment2);
+                        sendData(useremail, eventType, eventDate, eventCity, fragment2);
                         break;
                     case R.id.action_Feed:
                         fragment2 = new FeedFragment();
@@ -60,14 +64,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void sendData(String eventType, String eventDate, String eventCity, Fragment fragmentsent) {
+    private void sendData(String useremail, String eventType, String eventDate, String eventCity, Fragment fragmentsent) {
         Bundle bundle = new Bundle();
+        bundle.putString("Email",useremail);
         bundle.putString("Event",eventType);
         bundle.putString("Date",eventDate);
         bundle.putString("City",eventCity);
-        //Fragment fragobj = new EventListFragment();
         fragmentsent.setArguments(bundle);
-        //fragmentManager.beginTransaction().replace(R.id.flContainer, fragobj).addToBackStack(null).commit();
     }
 
 //    private void filter(String text) {
@@ -79,28 +82,4 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //        eventAdapter.filterList(filteredList);
 //    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menulogoutbtn) {
-            ParseUser.logOut();
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            return true;
-        }
-        if (item.getItemId() == R.id.menubackbtn) {
-            Intent i = new Intent(this, CategoriesActivity.class);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

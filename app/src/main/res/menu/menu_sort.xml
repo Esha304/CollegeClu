@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/DateRO"
+        android:title="Date: Recent to Old"
+        app:itemTextColor="@color/black"/>
+
+    <item
+        android:id="@+id/DateOR"
+        android:title="Date: Old to Recent"
+        app:itemTextColor="@color/black"/>
+
+<!--    <item-->
+<!--        android:id="@+id/Ascen"-->
+<!--        android:title="Ascending"-->
+<!--        app:itemTextColor="@color/black"/>-->
+
+<!--    <item-->
+<!--        android:id="@+id/Descen"-->
+<!--        android:title="Descending"-->
+<!--        app:itemTextColor="@color/black"/>-->
+
+    <item
+        android:id="@+id/menubackbtn"
+        android:title="Back to Categories"
+        app:itemTextColor="@color/black"/>
+
+</menu>

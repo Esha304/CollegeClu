@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoriesActivity"
+    tools:context=".CityTypeActivity"
     android:background="@color/yellow">
 
     <TextView
@@ -44,28 +44,28 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="28dp"
-        android:text="DATE:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/City" />
+<!--    <TextView-->
+<!--        android:id="@+id/Date"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="31dp"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:text="DATE:"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/City" />-->
 
-    <Spinner
-        android:id="@+id/spinnerD"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="10dp"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@id/Date"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerC"
-        android:layout_centerHorizontal="true" />
+<!--    <Spinner-->
+<!--        android:id="@+id/spinnerD"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:textSize="15sp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/Date"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/spinnerC"-->
+<!--        android:layout_centerHorizontal="true" />-->
 
 <!--    <Button-->
 <!--        android:id="@+id/datePickerButton"-->
@@ -91,7 +91,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Date" />
+        app:layout_constraintTop_toBottomOf="@id/City" />
 
     <Spinner
         android:id="@+id/spinnerE"
@@ -101,15 +101,15 @@
         android:layout_marginTop="8dp"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@id/Event"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerD"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerC"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/btnGo"
+        android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
-        android:text="LET'S GO 👉🏻"
+        android:text="NEXT 👉🏻"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/spinnerE"
         app:layout_constraintTop_toBottomOf="@id/spinnerE"

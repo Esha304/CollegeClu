@@ -1,57 +1,65 @@
 package com.example.findfun;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.security.PublicKey;
-import java.util.Calendar;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.parse.ParseUser;
 
-public class CategoriesActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-//    private DatePickerDialog datePickerDialog;
-//    private Button dateButton;
+import java.util.ArrayList;
+
+import okhttp3.Headers;
+
+public class CityTypeActivity extends AppCompatActivity {
+
+
+    public static final String TAG = "CityTypeActivity";
     public String sendCity;
     public String sendEvent;
-    public String sendDate;
-    Button btnGo;
+    Button btnNext;
+    MyDatabase eventDB;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_city_type);
 
-        btnGo = findViewById(R.id.btnGo);
+//        Intent incomingIntent = getIntent();
+//        userEmail = incomingIntent.getStringExtra("Email");
+        userEmail = ParseUser.getCurrentUser().getEmail();
+        System.out.println("GOT " + userEmail);
+
+        btnNext = findViewById(R.id.btnNext);
+        eventDB = new MyDatabase(CityTypeActivity.this);
+        addDataFromApi();
 
 //        initDatePicker();
 //        dateButton = findViewById(R.id.datePickerButton);
 //        dateButton.setText(getTodaysDate());
 
         Spinner citySpinner = (Spinner) findViewById(R.id.spinnerC);
-        Spinner dateSpinner = (Spinner) findViewById(R.id.spinnerD);
         Spinner eventSpinner = (Spinner) findViewById(R.id.spinnerE);
 
-        ArrayAdapter<String> myCAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
+        ArrayAdapter<String> myCAdapter = new ArrayAdapter<String>(CityTypeActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.city));
         myCAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         citySpinner.setAdapter(myCAdapter);
 
-        ArrayAdapter<String> myDAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.month));
-        myDAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dateSpinner.setAdapter(myDAdapter);
-
-        ArrayAdapter<String> myEAdapter = new ArrayAdapter<String>(CategoriesActivity.this,
+        ArrayAdapter<String> myEAdapter = new ArrayAdapter<String>(CityTypeActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.events));
         myEAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventSpinner.setAdapter(myEAdapter);
@@ -62,6 +70,11 @@ public class CategoriesActivity extends AppCompatActivity {
                 String selectedCity = adapterView.getItemAtPosition(i).toString();
                 switch (selectedCity)
                 {
+
+                    case "Please select a city":
+                        sendCity = "Please select a city";
+                        break;
+
                     case "Albuquerque":
                         sendCity = "Albuquerque";
                         break;
@@ -260,6 +273,10 @@ public class CategoriesActivity extends AppCompatActivity {
                 String selectedEvent = adapterView.getItemAtPosition(i).toString();
                 switch (selectedEvent)
                 {
+                    case "Please select the type of event":
+                        sendEvent = "Please select the type of event";
+                        break;
+
                     case "Sports":
                         sendEvent = "sports";
                         break;
@@ -284,158 +301,25 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
-        dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedMonth = adapterView.getItemAtPosition(i).toString();
-                switch (selectedMonth)
-                {
-                    case "January":
-                        sendDate = "01";
-                        break;
 
-                    case "February":
-                        sendDate = "02";
-                        break;
-
-                    case "March":
-                        sendDate = "03";
-                        break;
-
-                    case "April":
-                        sendDate = "04";
-                        break;
-
-                    case "May":
-                        sendDate = "05";
-                        break;
-
-                    case "June":
-                        sendDate = "06";
-                        break;
-
-                    case "July":
-                        sendDate = "07";
-                        break;
-
-                    case "August":
-                        sendDate = "08";
-                        break;
-
-                    case "September":
-                        sendDate = "09";
-                        break;
-
-                    case "October":
-                        sendDate = "10";
-                        break;
-
-                    case "November":
-                        sendDate = "11";
-                        break;
-
-                    case "December":
-                        sendDate = "12";
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        btnGo.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("Event",sendEvent);
-//                bundle.putString("Date",sendDate);
-//                bundle.putString("City",sendCity);
-//                EventListFragment fragobj = new EventListFragment();
-//                fragobj.setArguments(bundle);
-                //getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, fragobj).commit();
-                Intent intent = new Intent(CategoriesActivity.this, MainActivity.class);
-                intent.putExtra("Event",sendEvent);
-                intent.putExtra("Date",sendDate);
-                intent.putExtra("City",sendCity);
-                startActivity(intent);
+                if(sendCity == "Please select a city" || sendEvent == "Please select the type of event"){
+                    Toast.makeText(CityTypeActivity.this, "Please select the city and type of event!!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(CityTypeActivity.this, MonthActivity.class);
+                    intent.putExtra("Email", userEmail);
+                    intent.putExtra("Event",sendEvent);
+                    intent.putExtra("City",sendCity);
+                    startActivity(intent);
+                }
             }
         });
     }
 
-//    private String getTodaysDate()
-//    {
-//        Calendar cal = Calendar.getInstance();
-//        int year = cal.get(Calendar.YEAR);
-//        int month = cal.get(Calendar.MONTH);
-//        month = month + 1;
-//        int day = cal.get(Calendar.DAY_OF_MONTH);
-//        return makeDateString(day, month, year);
-//    }
-//
-//    private void initDatePicker()
-//    {
-//        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
-//        {
-//            @Override
-//            public void onDateSet(DatePicker datePicker, int year, int month, int day)
-//            {
-//                month = month + 1;
-//                String date = makeDateString(day, month, year);
-//                dateButton.setText(date);
-//            }
-//        };
-//
-//        Calendar cal = Calendar.getInstance();
-//        int year = cal.get(Calendar.YEAR);
-//        int month = cal.get(Calendar.MONTH);
-//        int day = cal.get(Calendar.DAY_OF_MONTH);
-//
-//        int style = AlertDialog.THEME_HOLO_LIGHT;
-//
-//        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-//    }
-//
-//    private String makeDateString(int day, int month, int year)
-//    {
-//        return year + "-" + getMonthFormat(month) + "-" + day;
-//    }
-//
-//    private String getMonthFormat(int month)
-//    {
-//        if(month == 1)
-//            return "01";
-//        if(month == 2)
-//            return "02";
-//        if(month == 3)
-//            return "03";
-//        if(month == 4)
-//            return "04";
-//        if(month == 5)
-//            return "05";
-//        if(month == 6)
-//            return "06";
-//        if(month == 7)
-//            return "07";
-//        if(month == 8)
-//            return "08";
-//        if(month == 9)
-//            return "09";
-//        if(month == 10)
-//            return "10";
-//        if(month == 11)
-//            return "11";
-//        if(month == 12)
-//            return "12";
-//
-//        //default should never happen
-//        return "JAN";
-//    }
-//
-//    public void openDatePicker(View view)
-//    {
-//        datePickerDialog.show();
-//    }
+    private void addDataFromApi() {
+        eventDB.insertData();
+    }
 }
