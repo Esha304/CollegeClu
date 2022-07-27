@@ -151,7 +151,19 @@ public class EventListFragment extends Fragment {
     }
 
     private void viewData() {
-        Cursor res1 = eventDB.getAllData(userEmail);
+        if (eventDB.checkIfExists(userEmail)) {
+            Cursor resDB = eventDB.getDataFromDB(strCity, strEvent);
+            sendtoList(resDB);
+            Log.d("eventlistfrag", " done inserting the data from DB ");
+        }
+        else{
+            Cursor resAll = eventDB.getAllData();
+            sendtoList(resAll);
+            Log.d("eventlistfrag", " done inserting the data");
+        }
+    }
+
+    private void sendtoList(Cursor res1) {
         if (res1.getCount() == 0) {
             Toast.makeText(getContext(), "No data.", Toast.LENGTH_SHORT).show();
             return;
