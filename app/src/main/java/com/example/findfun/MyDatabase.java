@@ -32,6 +32,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     public static final String VENUE_COL = "Venue";
     public static final String CITY_COL = "City";
     public static final String STATE_COL = "State";
+    public static final String TYPE_COL = "Type";
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -46,7 +47,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                 + DATE_COL + " TEXT, "
                 + VENUE_COL + " TEXT, "
                 + CITY_COL + " TEXT, "
-                + STATE_COL + " TEXT)";
+                + STATE_COL + " TEXT, "
+                + TYPE_COL + " TEXT)";
 
         String createTable2 = "CREATE TABLE " + TABLE_2 +" ("
                 + EMAIL_COL + " TEXT, "
@@ -115,12 +117,21 @@ public class MyDatabase extends SQLiteOpenHelper {
                             JSONObject json_data_state = json_data_first.getJSONObject("state");
                             String state = json_data_state.getString("stateCode");
 
+                            JSONObject jObjectType = toAddObject.getJSONObject("_embedded");
+                            JSONArray jArrayType = jObjectType.getJSONArray("attractions");
+                            JSONObject json_data_firsty = jArrayType.getJSONObject(0);
+                            JSONArray json_dataA_Type = json_data_firsty.getJSONArray("classifications");
+                            JSONObject json_data_secondy = json_dataA_Type.getJSONObject(0);
+                            JSONObject json_dataO_Type = json_data_secondy.getJSONObject("segment");
+                            String type = json_dataO_Type.getString("name");
+
                             contentValues.put(NAME_COL,name);
                             contentValues.put(IMAGE_COL,image);
                             contentValues.put(DATE_COL, date);
                             contentValues.put(VENUE_COL,venue);
                             contentValues.put(CITY_COL,city);
                             contentValues.put(STATE_COL, state);
+                            contentValues.put(TYPE_COL, type);
 
                             Log.i(DATABASE_NAME, " inserting jsin data "+ name+" "+image+" "+date+" "+venue+" "+city+" "+state);
 
@@ -228,10 +239,20 @@ public class MyDatabase extends SQLiteOpenHelper {
         return false;
     }
 
-    public Cursor getAllData(String useremail) {
+    public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor res = db.rawQuery("Select * from " + TABLE_2 + " LIMIT " + 5, null);;
+//        if(db != null){
+//            cursor = db.rawQuery(query, null);
+//        }
+        return res;
+    }
+
+    public Cursor getDataFromDB(String city, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor res = db.rawQuery("Select * from " + TABLE_1 + " WHERE "+ CITY_COL + " ='"+ city + "'" + " AND " + TYPE_COL + " ='"+ type + "'", null);
 //        if(db != null){
 //            cursor = db.rawQuery(query, null);
 //        }

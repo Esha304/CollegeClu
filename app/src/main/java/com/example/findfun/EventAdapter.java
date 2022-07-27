@@ -65,6 +65,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
         holder.tvLocation.setText(String.valueOf(event_venue.get(position)));
         holder.tvCity.setText(String.valueOf(event_city.get(position)));
         holder.tvState.setText(String.valueOf(event_state.get(position)));
+        holder.tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = String.valueOf(event_venue.get(holder.getAdapterPosition()));
+                String city = String.valueOf(event_city.get(holder.getAdapterPosition()));
+                holder.DisplayTrack(location, city);
+            }
+        });
         //Log.d("EventAdpapter", "OnBindViewHolder"+ position);
         //Event event = events.get(position);
         //holder.bind(event);
@@ -110,22 +118,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>{
             tvCity = itemView.findViewById(R.id.tvCity);
         }
 
-        public void bind(Event event) {
-            tvTitle.setText(event.getEventName());
-            Glide.with(context).load(event.posterURL).into(ivPoster);
-            tvDate.setText(event.getDate());
-            tvLocation.setText(event.getLocation());
-            tvState.setText(event.getState());
-            tvCity.setText(event.getCity());
-            tvLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String location = event.getLocation().toString();
-                    String city = event.getCity().toString();
-                    DisplayTrack(location, city);
-                }
-            });
-        }
         private void DisplayTrack(String location, String city) {
             try {
                 Uri uri = Uri.parse("https://www.google.co.in/maps/dir//"+ location + "," + city);
