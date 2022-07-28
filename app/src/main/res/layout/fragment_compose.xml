@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ComposeFragment">
+    tools:context=".ComposeFragment">
 
     <Button
         android:id="@+id/btnCapture"
@@ -14,20 +14,22 @@
         android:layout_marginStart="140dp"
         android:layout_marginTop="90dp"
         android:text="Capture"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orangeyellow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etCaption" />
 
     <ImageView
         android:id="@+id/ivImage1"
-        android:layout_width="228dp"
-        android:layout_height="217dp"
-        android:layout_marginStart="80dp"
+        android:layout_width="230dp"
+        android:layout_height="190dp"
+        android:padding="5dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="103dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnCapture"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:background="@drawable/background_border"/>
 
     <EditText
         android:id="@+id/etCaption"
@@ -38,6 +40,8 @@
         android:layout_marginEnd="100dp"
         android:ems="10"
         android:hint="Caption..."
+        android:textColor="@color/orangeyellow"
+        android:textColorHint="@color/orangeyellow"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +51,11 @@
         android:id="@+id/btnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="30dp"
         android:text="Post"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orangeyellow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivImage" />
 

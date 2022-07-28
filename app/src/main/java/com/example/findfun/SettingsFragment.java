@@ -26,10 +26,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.io.File;
 
@@ -158,7 +155,7 @@ public class SettingsFragment extends Fragment {
             return true;
         }
         if (item.getItemId() == R.id.menubackbtn) {
-            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            Intent i = new Intent(getContext(), CityActivity.class);
             startActivity(i);
             return true;
         }

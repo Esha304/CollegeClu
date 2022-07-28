@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CityTypeActivity"
-    android:background="@color/yellow">
+    tools:context=".CityActivity"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/tvCtg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="172dp"
-        android:text="CATEGORIES"
+        android:text="Please Select A City"
+        android:textColor="@color/orangeyellow"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,23 +25,25 @@
         android:id="@+id/City"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="330dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="170dp"
         android:text="CITY:"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/orangeyellow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvCtg"/>
 
     <Spinner
         android:id="@+id/spinnerC"
-        android:layout_width="250dp"
+        android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="319dp"
-        android:layout_marginStart="10dp"
-        android:textSize="15sp"
+        android:layout_marginTop="165dp"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:background="@drawable/bg_spinner"
+        app:layout_constraintTop_toBottomOf="@id/tvCtg"
         app:layout_constraintStart_toEndOf="@id/City"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_centerHorizontal="true" />
 
 <!--    <TextView-->
@@ -81,38 +83,42 @@
 <!--        android:layout_marginTop="8dp"-->
 <!--        android:onClick="openDatePicker"/>-->
 
-    <TextView
-        android:id="@+id/Event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="28dp"
-        android:text="Event:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/City" />
+<!--    <TextView-->
+<!--        android:id="@+id/Event"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="31dp"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:text="Event:"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/orangeyellow"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/City" />-->
 
-    <Spinner
-        android:id="@+id/spinnerE"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@id/Event"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerC"
-        android:layout_centerHorizontal="true" />
+<!--    <Spinner-->
+<!--        android:id="@+id/spinnerE"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="11dp"-->
+<!--        android:textSize="15sp"-->
+<!--        android:background="@drawable/bg_spinner"-->
+<!--        app:layout_constraintStart_toEndOf="@id/Event"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/spinnerC"-->
+<!--        android:layout_centerHorizontal="true" />-->
 
     <Button
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:text="NEXT 👉🏻"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/spinnerE"
-        app:layout_constraintTop_toBottomOf="@id/spinnerE"
+        android:layout_marginTop="170dp"
+        android:layout_marginStart="150dp"
+        android:text="NEXT"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orangeyellow"
+        app:layout_constraintStart_toStartOf="@id/spinnerC"
+        app:layout_constraintTop_toBottomOf="@id/spinnerC"
         app:layout_constraintVertical_bias="0.847" />
 
 

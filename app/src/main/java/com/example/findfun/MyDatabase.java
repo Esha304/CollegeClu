@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +34,12 @@ public class MyDatabase extends SQLiteOpenHelper {
     public static final String CITY_COL = "City";
     public static final String STATE_COL = "State";
     public static final String TYPE_COL = "Type";
+    String userEmail;
+    int nexttimes = 5;
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, 1);
+        userEmail = ParseUser.getCurrentUser().getEmail();
     }
 
     @Override
@@ -133,7 +137,7 @@ public class MyDatabase extends SQLiteOpenHelper {
                             contentValues.put(STATE_COL, state);
                             contentValues.put(TYPE_COL, type);
 
-                            Log.i(DATABASE_NAME, " inserting jsin data "+ name+" "+image+" "+date+" "+venue+" "+city+" "+state);
+                            Log.i(DATABASE_NAME, " inserting jsin data "+ name+" "+image+" "+date+" "+venue+" "+city+" "+state + " "+type);
 
                             db.insert(TABLE_1, null, contentValues);
 
@@ -202,7 +206,7 @@ public class MyDatabase extends SQLiteOpenHelper {
                 contentValues.put(STATE_COL, state);
 
 
-                Log.i(DATABASE_NAME, " inserting jsin data "+ name+" "+image+" "+date+" "+venue+" "+city+" "+state);
+                Log.i(DATABASE_NAME, " inserting json data "+ name+" "+image+" "+date+" "+venue+" "+city+" "+state);
 
                 db.insert(TABLE_2, null, contentValues);
 
@@ -239,10 +243,10 @@ public class MyDatabase extends SQLiteOpenHelper {
         return false;
     }
 
-    public Cursor getAllData() {
+    public Cursor getAllData(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor res = db.rawQuery("Select * from " + TABLE_2 + " LIMIT " + 5, null);;
+        Cursor res = db.rawQuery("Select * from " + TABLE_2 + " WHERE "+ EMAIL_COL + " ='" + email + "'"+ " LIMIT " + nexttimes, null);;
 //        if(db != null){
 //            cursor = db.rawQuery(query, null);
 //        }
@@ -261,7 +265,8 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public Cursor getNextData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_2 + " LIMIT " + 5 + " OFFSET " + 5, null);
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_2 + " WHERE "+ EMAIL_COL + " ='" + userEmail + "'"+ " LIMIT " + nexttimes + " OFFSET " + 5, null);
+        nexttimes=nexttimes+5;
         return res;
     }
 
@@ -277,55 +282,20 @@ public class MyDatabase extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean readAndUpdateData(JSONArray givenArray, String email) {
+    public boolean UpdateData(String email, ArrayList<String> event_name, ArrayList<String> event_image, ArrayList<String> event_date, ArrayList<String> event_venue, ArrayList<String> event_city, ArrayList<String> event_state) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        for(int i=0; i<givenArray.length(); i++){
-            JSONObject toAddObject;
-
-            try {
-                toAddObject = givenArray.getJSONObject(i);
-                String name = toAddObject.getString("name");
-
-                JSONArray jArrayimages = toAddObject.getJSONArray("images");
-                JSONObject json_data_images = jArrayimages.getJSONObject(2);
-                String image = json_data_images.getString("url");
-
-                JSONObject jObjectdates = toAddObject.getJSONObject("dates");
-                JSONObject json_data_date = jObjectdates.getJSONObject("start");
-                String date = json_data_date.getString("localDate");
-
-                JSONObject jObjectlocation = toAddObject.getJSONObject("_embedded");
-                JSONArray jArraylocation = jObjectlocation.getJSONArray("venues");
-                JSONObject json_data_location = jArraylocation.getJSONObject(0);
-                String venue = json_data_location.getString("name");
-
-                JSONObject jObjectCountry = toAddObject.getJSONObject("_embedded");
-                JSONArray jArrayCountry = jObjectCountry.getJSONArray("venues");
-                JSONObject json_data_firs = jArrayCountry.getJSONObject(0);
-                JSONObject json_data_country = json_data_firs.getJSONObject("city");
-                String city = json_data_country.getString("name");
-
-                JSONObject jObjectState = toAddObject.getJSONObject("_embedded");
-                JSONArray jArrayState = jObjectState.getJSONArray("venues");
-                JSONObject json_data_first = jArrayState.getJSONObject(0);
-                JSONObject json_data_state = json_data_first.getJSONObject("state");
-                String state = json_data_state.getString("stateCode");
-
-                contentValues.put(EMAIL_COL,email);
-                contentValues.put(NAME_COL,name);
-                contentValues.put(IMAGE_COL,image);
-                contentValues.put(DATE_COL, date);
-                contentValues.put(VENUE_COL,venue);
-                contentValues.put(CITY_COL,city);
-                contentValues.put(STATE_COL, state);
-
-                db.update(TABLE_2, contentValues, "Email = ?",new String[] { email });
-
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
+        for(int i=0; i<event_city.size(); i++){
+            contentValues.put(EMAIL_COL,email);
+            contentValues.put(NAME_COL,String.valueOf(event_name.get(i)));
+            contentValues.put(IMAGE_COL,String.valueOf(event_image.get(i)));
+            contentValues.put(DATE_COL, String.valueOf(event_date.get(i)));
+            contentValues.put(VENUE_COL,String.valueOf(event_venue.get(i)));
+            contentValues.put(CITY_COL,String.valueOf(event_city.get(i)));
+            contentValues.put(STATE_COL, String.valueOf(event_state.get(i)));
         }
+        db.update(TABLE_2, contentValues, "Email = ?",new String[] {email});
+        Log.i("DATABASE UPDATED ", "SUCCESSS ");
         return true;
     }
 

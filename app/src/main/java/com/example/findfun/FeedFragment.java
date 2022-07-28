@@ -17,16 +17,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.findfun.Post;
-import com.example.findfun.PostsAdapter;
-import com.example.findfun.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -127,7 +121,7 @@ public class FeedFragment extends Fragment {
             return true;
         }
         if (item.getItemId() == R.id.menubackbtn) {
-            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            Intent i = new Intent(getContext(), CityActivity.class);
             startActivity(i);
             return true;
         }

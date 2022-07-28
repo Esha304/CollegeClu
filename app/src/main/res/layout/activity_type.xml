@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TypeActivity"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/tvCtg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="172dp"
+        android:text="Please Select The Type Of Event"
+        android:textColor="@color/orangeyellow"
+        android:textSize="27sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="170dp"
+        android:text="EVENT:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/orangeyellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCtg2" />
+
+    <Spinner
+        android:id="@+id/spinnerE"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="165dp"
+        android:textSize="20sp"
+        android:background="@drawable/bg_spinner"
+        app:layout_constraintStart_toEndOf="@id/Event"
+        app:layout_constraintTop_toBottomOf="@+id/tvCtg2"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnshowEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:layout_marginStart="80dp"
+        android:text="SHOW EVENTS"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/orangeyellow"
+        app:layout_constraintStart_toStartOf="@id/spinnerE"
+        app:layout_constraintTop_toBottomOf="@id/spinnerE"
+        app:layout_constraintVertical_bias="0.847" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
         if (ParseUser.getCurrentUser() != null){
@@ -113,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goCTActivity(String emailId) {
-        Intent i = new Intent(this, CityTypeActivity.class);
+        Intent i = new Intent(this, CityActivity.class);
         i.putExtra("Email",emailId);
         Log.i("GOT FROM LOGIN ", "SUCCESSS " + emailId);
         startActivity(i);
@@ -121,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goMainActivity() {
-        Intent i = new Intent(this, CityTypeActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }

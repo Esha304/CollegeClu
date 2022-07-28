@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/btn_showmore"
@@ -15,13 +16,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/orangeyellow"
             android:text="SHOW MORE"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvEvents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/btn_showmore"/>
+            android:layout_above="@id/btn_showmore"
+            android:paddingTop="5dp"/>
 
     </RelativeLayout>
 

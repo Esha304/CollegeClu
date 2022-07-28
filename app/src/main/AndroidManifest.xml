@@ -25,10 +25,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher_foreground_icon"
+        android:icon="@drawable/bg"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/bg"
         android:supportsRtl="true"
         android:theme="@style/Theme.FindFun"
         android:usesCleartextTraffic="true"
@@ -37,10 +37,10 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".CityTypeActivity"
+            android:name=".CityActivity"
             android:exported="false" />
         <activity
-            android:name=".MonthActivity"
+            android:name=".TypeActivity"
             android:exported="false" />
 
         <provider
