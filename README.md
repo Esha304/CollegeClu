@@ -38,6 +38,7 @@ Helps you with finding Events happening in your selected city, with buying ticke
 **Optional Nice-to-have Stories**
 
 * [ ] Users can buy a ticket for the event.
+* [X] get events from db.
 * [X] User can sort events.
 * [X] User can like on other's posts.
 * [X] User can post something.
