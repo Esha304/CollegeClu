@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,16 +20,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.Headers;
 
-public class CityTypeActivity extends AppCompatActivity {
+public class CityActivity extends AppCompatActivity {
 
 
     public static final String TAG = "CityTypeActivity";
     public String sendCity;
-    public String sendEvent;
     Button btnNext;
     MyDatabase eventDB;
     String userEmail;
@@ -36,7 +36,9 @@ public class CityTypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_type);
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_city);
 
 //        Intent incomingIntent = getIntent();
 //        userEmail = incomingIntent.getStringExtra("Email");
@@ -44,7 +46,7 @@ public class CityTypeActivity extends AppCompatActivity {
         System.out.println("GOT " + userEmail);
 
         btnNext = findViewById(R.id.btnNext);
-        eventDB = new MyDatabase(CityTypeActivity.this);
+        eventDB = new MyDatabase(CityActivity.this);
         addDataFromApi();
 
 //        initDatePicker();
@@ -52,17 +54,11 @@ public class CityTypeActivity extends AppCompatActivity {
 //        dateButton.setText(getTodaysDate());
 
         Spinner citySpinner = (Spinner) findViewById(R.id.spinnerC);
-        Spinner eventSpinner = (Spinner) findViewById(R.id.spinnerE);
 
-        ArrayAdapter<String> myCAdapter = new ArrayAdapter<String>(CityTypeActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.city));
-        myCAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> myCAdapter = new ArrayAdapter<String>(CityActivity.this,
+                R.layout.selecteditem_spinner, getResources().getStringArray(R.array.city));
+        myCAdapter.setDropDownViewResource(R.layout.dropdown_spinner);
         citySpinner.setAdapter(myCAdapter);
-
-        ArrayAdapter<String> myEAdapter = new ArrayAdapter<String>(CityTypeActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.events));
-        myEAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        eventSpinner.setAdapter(myEAdapter);
 
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -70,11 +66,6 @@ public class CityTypeActivity extends AppCompatActivity {
                 String selectedCity = adapterView.getItemAtPosition(i).toString();
                 switch (selectedCity)
                 {
-
-                    case "Please select a city":
-                        sendCity = "Please select a city";
-                        break;
-
                     case "Albuquerque":
                         sendCity = "Albuquerque";
                         break;
@@ -267,59 +258,90 @@ public class CityTypeActivity extends AppCompatActivity {
             }
         });
 
-        eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedEvent = adapterView.getItemAtPosition(i).toString();
-                switch (selectedEvent)
-                {
-                    case "Please select the type of event":
-                        sendEvent = "Please select the type of event";
-                        break;
-
-                    case "Sports":
-                        sendEvent = "sports";
-                        break;
-
-                    case "Music":
-                        sendEvent = "music";
-                        break;
-
-                    case "Arts and Theatre":
-                        sendEvent = "art";
-                        break;
-
-                    case "Family":
-                        sendEvent = "family";
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String selectedEvent = adapterView.getItemAtPosition(i).toString();
+//                switch (selectedEvent)
+//                {
+//                    case "Please select the type of event":
+//                        sendEvent = "Please select the type of event";
+//                        break;
+//
+//                    case "Sports":
+//                        sendEvent = "sports";
+//                        break;
+//
+//                    case "Music":
+//                        sendEvent = "music";
+//                        break;
+//
+//                    case "Arts and Theatre":
+//                        sendEvent = "art";
+//                        break;
+//
+//                    case "Family":
+//                        sendEvent = "family";
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sendCity == "Please select a city" || sendEvent == "Please select the type of event"){
-                    Toast.makeText(CityTypeActivity.this, "Please select the city and type of event!!", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent intent = new Intent(CityTypeActivity.this, MonthActivity.class);
-                    intent.putExtra("Email", userEmail);
-                    intent.putExtra("Event",sendEvent);
-                    intent.putExtra("City",sendCity);
-                    startActivity(intent);
-                }
+                populateEventsonCity(sendCity);
+                Intent intent = new Intent(CityActivity.this, TypeActivity.class);
+                intent.putExtra("City",sendCity);
+                Log.d("CityActivity", " on pressing next button");
+                Log.d("CityActivity -> sent ", sendCity+ " onSuccess");
+                startActivity(intent);
             }
         });
     }
 
+    private void populateEventsonCity(String location) {
+        EventClient client = new EventClient();
+        client.getEventsOnCity(location, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d("CityActivity", "onSuccess getting results");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONObject embedded = jsonObject.getJSONObject("_embedded");
+                    JSONArray results = embedded.getJSONArray("events");
+                    Log.i("CityActivity", "Results: " + results.toString());
+
+                    sendtoDbT2(results, userEmail);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d("MonthActivity", "onFailure" + response);
+            }
+        });
+    }
+
+    private void sendtoDbT2(JSONArray results, String email) {
+        if(eventDB.checkIfExists(email)){
+            Log.i("DATABASE ", "already as emailid " + email);
+        }
+        else{
+            eventDB.addData(results, email);
+            Log.i("DATABASE ADD", "SUCCESSS " + email);
+        }
+    }
+
     private void addDataFromApi() {
         eventDB.insertData();
+        Log.d("city Activity ", "database table 1 data added");
     }
 }

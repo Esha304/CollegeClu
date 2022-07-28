@@ -1,12 +1,11 @@
 <resources>
-    <string name="app_name">FindFun</string>
+    <string name="app_name">FindYourFun</string>
     <string name="title_activity_show_map">ShowMapActivity</string>
     <!--    <string name="back4app_server_url">https://parseapi.back4app.com/</string>-->
     <!--    <string name="back4app_app_id">AtT1Ph84598MJ9HPORB40Tsjj0Rg3axDEtSAnE5F</string>-->
     <!--    <string name="back4app_client_key">Io45GM5Hm1pDUeQ2Tfmnxyl0tV1q0ulLskUZSXIt</string>-->
 
     <string-array name="city">
-        <item>Please select a city</item>
         <item>Albuquerque</item>
         <item>Anaheim</item>
         <item>Arlington</item>
@@ -74,7 +73,6 @@
     </string-array>
 
     <string-array name="events">
-        <item>Please select the type of event</item>
         <item>Sports</item>
         <item>Music</item>
         <item>Arts and Theatre</item>

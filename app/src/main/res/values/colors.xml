@@ -10,5 +10,7 @@
     <color name="Background">#ff8000</color>
     <color name="red">#C32D0D</color>
     <color name="colorTextHint">#beffffff</color>
-    <color name="yellow">#FFD700</color>
+    <color name="yellow">#F6BE00</color>
+    <color name="orangeyellow">#FFA500</color>
+    <color name="title_color">#FF000000</color>
 </resources>

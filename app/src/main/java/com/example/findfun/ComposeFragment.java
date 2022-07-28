@@ -27,8 +27,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.findfun.Post;
-import com.example.findfun.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -203,7 +201,7 @@ public class ComposeFragment extends Fragment {
             return true;
         }
         if (item.getItemId() == R.id.menubackbtn) {
-            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            Intent i = new Intent(getContext(), CityActivity.class);
             startActivity(i);
             return true;
         }

@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/background_border"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/ivPoster"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/black"
@@ -24,6 +28,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
         android:text="- "
+        android:textColor="@color/yellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -36,7 +41,7 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
         android:text="name"
-        android:textColor="@color/black"
+        android:textColor="@color/yellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -48,6 +53,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
         android:text="- "
+        android:textColor="@color/orangeyellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -61,19 +67,18 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
         android:text="monday"
-        android:textColor="@color/yellow"
+        android:textColor="@color/orangeyellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
     <ImageView
         android:id="@+id/tvDash3"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/tvDate"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="5dp"
-        android:src="@drawable/locationimg"
-        android:textSize="15sp"
+        android:src="@drawable/location1"
         android:textStyle="bold|italic" />
 
     <TextView
@@ -99,6 +104,7 @@
         android:layout_toRightOf="@id/tvLocation"
         android:layout_marginTop="3dp"
         android:text=" ."
+        android:textColor="@color/orangeyellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -111,6 +117,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
         android:text="city"
+        android:textColor="@color/orangeyellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -122,6 +129,7 @@
         android:layout_toRightOf="@id/tvCity"
         android:layout_marginTop="3dp"
         android:text=", "
+        android:textColor="@color/yellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
@@ -133,15 +141,17 @@
         android:layout_toRightOf="@+id/tvComma"
         android:layout_marginTop="3dp"
         android:text="state"
+        android:textColor="@color/yellow"
         android:textStyle="bold|italic"
         android:textSize="15sp"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocation"
-        android:background="@drawable/background_border"/>
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="7dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_below="@+id/tvLocation"-->
+<!--        android:background="@color/orangeyellow"/>-->
 
 <!--    <View-->
 <!--        android:id="@+id/divider"-->

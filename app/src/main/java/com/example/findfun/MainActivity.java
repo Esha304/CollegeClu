@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         Intent incomingIntent = getIntent();
-        String useremail = ParseUser.getCurrentUser().getEmail();
         String eventType = incomingIntent.getStringExtra("Event");
-        String eventDate = incomingIntent.getStringExtra("Date");
+        //String eventDate = incomingIntent.getStringExtra("Date");
         String eventCity = incomingIntent.getStringExtra("City");
-        sendData(useremail, eventType, eventDate, eventCity, fragment1);
+        sendData(eventType, eventCity, fragment1);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment1).addToBackStack(null).commit();
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem .getItemId()) {
                     case R.id.action_home:
                         fragment2 = new EventListFragment();
-                        sendData(useremail, eventType, eventDate, eventCity, fragment2);
+                        sendData(eventType, eventCity, fragment2);
                         break;
                     case R.id.action_Feed:
                         fragment2 = new FeedFragment();
@@ -64,11 +65,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void sendData(String useremail, String eventType, String eventDate, String eventCity, Fragment fragmentsent) {
+    private void sendData(String eventType, String eventCity, Fragment fragmentsent) {
         Bundle bundle = new Bundle();
-        bundle.putString("Email",useremail);
         bundle.putString("Event",eventType);
-        bundle.putString("Date",eventDate);
         bundle.putString("City",eventCity);
         fragmentsent.setArguments(bundle);
     }

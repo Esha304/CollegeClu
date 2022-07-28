@@ -1,6 +1,5 @@
 package com.example.findfun;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,24 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.findfun.Event;
-import com.example.findfun.EventAdapter;
-import com.example.findfun.EventClient;
-import com.example.findfun.R;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Headers;
 
 public class EventListFragment extends Fragment {
 
@@ -48,7 +33,7 @@ public class EventListFragment extends Fragment {
     //SwipeRefreshLayout swipeContainer;
     String userEmail;
     String strEvent;
-    String strDate;
+    //String strDate;
     String strCity;
     MyDatabase eventDB;
     Button btnviewAll;
@@ -68,8 +53,10 @@ public class EventListFragment extends Fragment {
             userEmail = ParseUser.getCurrentUser().getEmail();
             System.out.println("GOT in eventfrag " + userEmail);
             strEvent = getArguments().getString("Event");
-            strDate = getArguments().getString("Date");
+            System.out.println("GOT in eventfrag " + strEvent);
+            //strDate = getArguments().getString("Date");
             strCity = getArguments().getString("City");
+            System.out.println("GOT in eventfrag " + strCity);
             //populateSearchEvents(strCity, strEvent);
         }
 
@@ -152,34 +139,28 @@ public class EventListFragment extends Fragment {
 
     private void viewData() {
         if (eventDB.checkIfExists(userEmail)) {
-            Cursor resDB = eventDB.getDataFromDB(strCity, strEvent);
-            sendtoList(resDB);
+            Cursor resDB = eventDB.getAllData(userEmail);
+            if (resDB.getCount() == 0) {
+                Toast.makeText(getContext(), "No data found while going through database ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            while (resDB.moveToNext()) {
+                event_email.add(resDB.getString(0));
+                event_name.add(resDB.getString(1));
+                event_image.add(resDB.getString(2));
+                event_date.add(resDB.getString(3));
+                event_venue.add(resDB.getString(4));
+                event_city.add(resDB.getString(5));
+                event_state.add(resDB.getString(6));
+            }
+            eventAdapter = new EventAdapter(getContext(), event_name, event_image, event_date, event_venue, event_city, event_state);
+            rvEvents.setAdapter(eventAdapter);
+            rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
             Log.d("eventlistfrag", " done inserting the data from DB ");
         }
         else{
-            Cursor resAll = eventDB.getAllData();
-            sendtoList(resAll);
-            Log.d("eventlistfrag", " done inserting the data");
+            Log.d("eventlistfrag", " data not found ");
         }
-    }
-
-    private void sendtoList(Cursor res1) {
-        if (res1.getCount() == 0) {
-            Toast.makeText(getContext(), "No data.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        while (res1.moveToNext()) {
-            event_email.add(res1.getString(0));
-            event_name.add(res1.getString(1));
-            event_image.add(res1.getString(2));
-            event_date.add(res1.getString(3));
-            event_venue.add(res1.getString(4));
-            event_city.add(res1.getString(5));
-            event_state.add(res1.getString(6));
-        }
-        eventAdapter = new EventAdapter(getContext(), event_name, event_image, event_date, event_venue, event_city, event_state);
-        rvEvents.setAdapter(eventAdapter);
-        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     //    private void populateSearchEvents(String location, String type) {
@@ -233,7 +214,7 @@ public class EventListFragment extends Fragment {
             return true;
         }
         if (item.getItemId() == R.id.menubackbtn) {
-            Intent i = new Intent(getContext(), CityTypeActivity.class);
+            Intent i = new Intent(getContext(), CityActivity.class);
             startActivity(i);
             return true;
         }
